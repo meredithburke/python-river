@@ -14,11 +14,11 @@ def main(args):
     - passing data between models and views
     """
     Infiles = args.infiles
-    if not isinstance(InFiles, list):
-        InFiles = [args.infiles]
+    if not isinstance(Infiles, list):
+        Infiles = [args.infiles]
     
 
-    for filename in InFiles:
+    for filename in Infiles:
         measurement_data = models.read_variable_from_csv(filename)
         
         view_data = {'daily sum': models.daily_total(measurement_data), 
