@@ -8,6 +8,8 @@
 # Output files
 *.png
 
+venv/
+
 # Python runtime
 *.pyc
 *.egg-info
