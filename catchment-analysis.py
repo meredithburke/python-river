@@ -19,7 +19,11 @@ def main(args):
         InFiles = [args.infiles]
     
     if args.full_data_analysis:
-        compute_data.analyse_data(os.path.dirname(InFiles[0]))
+        daily_standard_deviation = compute_data.analyse_data(os.path.dirname(InFiles[0]))
+
+        graph_data = { 
+            'daily standard devaition' : daily_standard_deviation 
+        }
 
     for filename in InFiles:
         measurement_data = models.read_variable_from_csv(filename)
