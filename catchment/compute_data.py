@@ -7,6 +7,12 @@ import pandas as pd
 
 from catchment import models, views
 
+def load_catchment_data(dir_path):
+    data_file_paths = glob.glob(os.path.join(dir_path, 'rain_data_2015*.csv'))
+    if len(data_file_paths) == 0:
+        raise ValueError('No CSV files found in the data directory')
+    data = map(models.read_variable_from_csv, data_file_paths)
+    return list(data)
 
 def analyse_data(data_dir):
     """Calculate the standard deviation by day between datasets.
@@ -15,20 +21,36 @@ def analyse_data(data_dir):
     works out the mean for each day, and then graphs the standard deviation
     of these means.
     """
-    data_file_paths = glob.glob(os.path.join(data_dir, 'rain_data_2015*.csv'))
-    if len(data_file_paths) == 0:
-        raise ValueError('No CSV files found in the data directory')
-    data = map(models.read_variable_from_csv, data_file_paths)
+    # data_file_paths = glob.glob(os.path.join(data_dir, 'rain_data_2015*.csv'))
 
+    data=load_catchment_data(data_dir)
+    return compute_standard_deviation_by_day_map(data)
+    
+def compute_standard_deviation_by_day(data):
     daily_std_list = []
     for dataset in data:
         daily_std = dataset.groupby(dataset.index.date).std()
         daily_std_list.append(daily_std)
     
     daily_standard_deviation = pd.concat(daily_std_list)
+    #print(daily_standard_deviation)
+    return daily_standard_deviation
 
-    graph_data = {
-        'daily standard deviation': daily_standard_deviation
-    }
+def daily_std(data):
+    """Calculate the daily std of a 2D data array.
+    Index must be np.datetime64 compatible format."""
+    return data.groupby(data.index.date).std()
 
-    views.visualize(graph_data)
+def compute_standard_deviation_by_day_map(data):
+    """Replacing for loop with map"""
+    daily_std_map=map(daily_std, data)
+    daily_standard_deviation = pd.concat(daily_std_map)
+    return daily_standard_deviation
+
+
+
+    # graph_data = {
+    #     'daily standard deviation': daily_standard_deviation
+    # }
+
+    # views.visualize(graph_data)
