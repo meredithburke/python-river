@@ -58,6 +58,7 @@ def analyse_data(data_source):
     works out the mean for each day, and then graphs the standard deviation
     of these means.
     """
+
     # data_file_paths = glob.glob(os.path.join(data_dir, 'rain_data_2015*.csv'))
 
     data = data_source.load_catchment_data()
