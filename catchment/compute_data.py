@@ -7,7 +7,6 @@ import pandas as pd
 
 from catchment import models, views
 
-
 def compute_standard_deviation_by_day(data):
     """Calculate the standard deviation by day between datasets.
     """

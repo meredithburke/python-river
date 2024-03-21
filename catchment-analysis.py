@@ -14,9 +14,9 @@ def main(args):
     - selecting the necessary models and views for the current task
     - passing data between models and views
     """
-    InFiles = args.infiles
-    if not isinstance(InFiles, list):
-        InFiles = [args.infiles]
+    Infiles = args.infiles
+    if not isinstance(Infiles, list):
+        Infiles = [args.infiles]
     
     if args.full_data_analysis:
         _, extension = os.path.splitext(InFiles[0])
@@ -48,7 +48,7 @@ def main(args):
 
 def create_argparse():
     parser = argparse.ArgumentParser(
-        description='A basic environmental data management system')
+        description = 'A basic environmental data management system')
     
     req_group = parser.add_argument_group('required argumemnts')
     

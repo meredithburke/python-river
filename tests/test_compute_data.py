@@ -1,14 +1,17 @@
 import numpy as np
+import pandas as pd
 import numpy.testing as npt
 from pathlib import Path
 
 def test_analyse_data():
     from catchment.compute_data import analyse_data, CSVDataSource, JSONDataSource
+
+    #from catchment.compute_data import compute_standard_deviation_by_day
     path = Path.cwd() / "data"
-    # data_source = CSVDataSource(path)
     data_source = JSONDataSource(path)
     result = analyse_data(data_source)
-    expected_output = [[0.        , 0.18801829],
+    #result = analyse_data(path)
+    expected_output = [ [0.        , 0.18801829],
                        [0.10978448, 0.43107373],
                        [0.06066156, 0.0699624 ],
                        [0.        , 0.02041241],
