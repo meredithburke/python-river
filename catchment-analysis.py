@@ -27,7 +27,7 @@ def main(args):
             data_source = compute_data.CSVDataSource(os.path.dirname(InFiles[0]))
         else:
             raise ValueError(f'Unsupported file format: {extension}')
-        
+            
         daily_standard_deviation = compute_data.analyse_data(data_source)
 
         graph_data = {
@@ -43,7 +43,7 @@ def main(args):
         
         views.visualize(view_data)
 
-if __name__ == "__main__":
+def create_argparse():
     parser = argparse.ArgumentParser(
         description='A basic environmental data management system')
     
@@ -53,6 +53,12 @@ if __name__ == "__main__":
         help='Input CSV(s) containing measurement data')
 
     parser.add_argument('--full-data-analysis', action='store_true', dest='full_data_analysis')
+
+    return parser
+
+if __name__ == "__main__":
+    
+    parser = create_argparse()
     
     args = parser.parse_args()
     
