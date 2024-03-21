@@ -5,6 +5,7 @@ from pathlib import Path
 
 def test_analyse_data():
     from catchment.compute_data import analyse_data, CSVDataSource, JSONDataSource
+
     #from catchment.compute_data import compute_standard_deviation_by_day
     path = Path.cwd() / "data"
     data_source = JSONDataSource(path)
