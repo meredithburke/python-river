@@ -13,9 +13,9 @@ def main(args):
     - selecting the necessary models and views for the current task
     - passing data between models and views
     """
-    InFiles = args.infiles
-    if not isinstance(InFiles, list):
-        InFiles = [args.infiles]
+    Infiles = args.infiles
+    if not isinstance(Infiles, list):
+        Infiles = [args.infiles]
     
     if args.full_data_analysis:
         _, extension = os.path.splitext(InFiles[0])
@@ -33,6 +33,7 @@ def main(args):
 
     for filename in InFiles:
         measurement_data = models.read_variable_from_csv(filename, args.measurements)
+
         
         view_data = {'daily sum': models.daily_total(measurement_data), 
                      'daily average': models.daily_mean(measurement_data), 
@@ -44,7 +45,7 @@ def main(args):
 
 def create_argparse():
     parser = argparse.ArgumentParser(
-        description='A basic environmental data management system')
+        description = 'A basic environmental data management system')
     
     req_group = parser.add_argument_group('required arguments')
     
@@ -67,7 +68,6 @@ def create_argparse():
 if __name__ == "__main__":
     
     parser = create_argparse()
-    
     args = parser.parse_args()
     
     main(args)
