@@ -107,7 +107,6 @@ def daily_min(data):
     Index must be np.datetime64 compatible format."""
     return data.groupby(data.index.date).min()
 
-
 def data_normalise(data):
     """Normalise any given 2D data array"""
     normal_max = np.array(np.max(data, axis=0))
