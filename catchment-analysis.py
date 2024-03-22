@@ -13,7 +13,7 @@ def main(args):
     - selecting the necessary models and views for the current task
     - passing data between models and views
     """
-    InFiles = args.inFiles
+    InFiles = args.infiles
     if not isinstance(InFiles, list):
         InFiles = [args.infiles]
     
@@ -23,6 +23,8 @@ def main(args):
             data_source = compute_data.JSONDataSource(os.path.dirname(InFiles[0]), f"rain_data_2015*{extension}")
         elif extension == '.csv':
             data_source = compute_data.CSVDataSource(os.path.dirname(InFiles[0]), f"rain_data_2015*{extension}")
+        elif extension == '.xml':
+            data_source = compute_data.XMLDataSource(os.path.dirname(InFiles[0]), f"rain_data_2015*{extension}")
         else:
             raise ValueError(f'Unsupported file format: {extension}')
         daily_standard_deviation = compute_data.analyse_data(data_source)
@@ -37,6 +39,8 @@ def main(args):
             measurement_data = models.read_variable_from_json(filename, args.measurements)
         elif extension == '.csv':
             measurement_data = models.read_variable_from_csv(filename, args.measurements)
+        elif extension == '.xml':
+            measurement_data = models.read_variable_from_xml(filename, args.measurements)
         else:
             raise ValueError(f'Unsupported file format: {extension}')
 
@@ -58,7 +62,7 @@ def create_argparse():
     parser.add_argument(
         'infiles',
         nargs='+',
-        help='Input CSV(s) of JSON containing measurement data')
+        help='Input CSV(s), JSON, XML, containing measurement data')
     
     req_group.add_argument(
         '-m', '--measurements',
