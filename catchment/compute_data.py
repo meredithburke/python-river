@@ -18,6 +18,7 @@ class CSVDataSource:
         data = map(models.read_variable_from_csv, data_file_paths)
         return list(data)
 
+
 class JSONDataSource:
     def __init__(self, dir_path):
         self.dir_path = dir_path  
@@ -29,17 +30,6 @@ class JSONDataSource:
         data = map(models.read_variable_from_json, data_file_paths)
         return list(data)   
 
-def daily_std(data):
-    """Calculate the daily std of a 2D data array.
-    Index must be np.datetime64 compatible format."""
-    return data.groupby(data.index.date).std()
-
-def compute_standard_deviation_by_day_map(data):
-    """Replacing for loop with map"""
-    daily_std_map=[]
-    daily_std_map=map(daily_std, data)
-    daily_standard_deviation = pd.concat(daily_std_map)
-    return daily_standard_deviation
 
 def analyse_data(data_source):
     """Calculate the standard deviation by day between datasets.
@@ -50,4 +40,4 @@ def analyse_data(data_source):
     """
 
     data = data_source.load_catchment_data()
-    return compute_standard_deviation_by_day_map(data)
+    return models.compute_standard_deviation_by_day_map(data)

@@ -19,3 +19,9 @@ venv/
 
 #dis
 dist/
+
+# Examples
+examples.ipynb
+
+# DS Store
+.DS_store
