@@ -35,7 +35,7 @@ def read_variable_from_csv(filename, measurements="Rainfall (mm)"):
 
     return newdataset
 
-def read_variable_from_json(filename):
+def read_variable_from_json(filename, measurements="Rainfall (mm)"):
     """Reads a named variable from a JSON file, and returns a
     pandas dataframe containing that variable. The JSON file must contain
     a column of dates, a column of site ID's, and (one or more) columns
@@ -46,16 +46,16 @@ def read_variable_from_json(filename):
              Columns will be the individual sites
     """
     dataset = pd.read_json(filename, convert_dates=False)
-    dataset = dataset[['Date', 'Site', 'Rainfall (mm)']]
+    dataset = dataset[['Date', 'Site', measurements]]
 
     dataset = dataset.rename({'Date':'OldDate'}, axis='columns')
-    dataset['Date'] = [pd.to_datetime(x,dayfirst=True) for x in dataset['OldDate']]
+    dataset['Date'] = [pd.to_datetime(x,dayfirst=True,format='mixed') for x in dataset['OldDate']]
     dataset = dataset.drop('OldDate', axis='columns')
 
     newdataset = pd.DataFrame(index=dataset['Date'].unique())
 
     for site in dataset['Site'].unique():
-        newdataset[site] = dataset[dataset['Site'] == site].set_index('Date')["Rainfall (mm)"]
+        newdataset[site] = dataset[dataset['Site'] == site].set_index('Date')[measurements]
 
     newdataset = newdataset.sort_index()
 

@@ -13,12 +13,12 @@ def main(args):
     - selecting the necessary models and views for the current task
     - passing data between models and views
     """
-    InFiles = args.infiles
+    InFiles = args.inFiles
     if not isinstance(InFiles, list):
         InFiles = [args.infiles]
     
     if args.full_data_analysis:
-        _, extension = os.path.splitext(Infiles[0])
+        _, extension = os.path.splitext(InFiles[0])
         if extension == '.json':
             data_source = compute_data.JSONDataSource(os.path.dirname(InFiles[0]), f"rain_data_2015*{extension}")
         elif extension == '.csv':
@@ -31,8 +31,14 @@ def main(args):
             'daily standard devaition' : daily_standard_deviation 
         }
 
-    for filename in Infiles:
-        measurement_data = models.read_variable_from_csv(filename, args.measurements)
+    for filename in InFiles:
+        _, extension = os.path.splitext(filename)
+        if extension == '.json':
+            measurement_data = models.read_variable_from_json(filename, args.measurements)
+        elif extension == '.csv':
+            measurement_data = models.read_variable_from_csv(filename, args.measurements)
+        else:
+            raise ValueError(f'Unsupported file format: {extension}')
 
         
         view_data = {'daily sum': models.daily_total(measurement_data), 
