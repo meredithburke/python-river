@@ -35,6 +35,7 @@ def read_variable_from_csv(filename, measurements="Rainfall (mm)"):
 
     return newdataset
 
+  
 def read_variable_from_json(filename, measurements="Rainfall (mm)"):
     """Reads a named variable from a JSON file, and returns a
     pandas dataframe containing that variable. The JSON file must contain
@@ -62,6 +63,7 @@ def read_variable_from_json(filename, measurements="Rainfall (mm)"):
     return newdataset
 
 def read_variable_from_xml(filename, measurements="Rainfall (mm)"):
+
     """Reads a named variable from a XML file, and returns a
     pandas dataframe containing that variable. 
 
@@ -90,6 +92,7 @@ def daily_total(data):
     Index must be np.datetime64 compatible format."""
     return data.groupby(data.index.date).sum()
 
+
 def daily_mean(data):
     """Calculate the daily mean of a 2D data array.
     Index must be np.datetime64 compatible format."""
@@ -106,6 +109,21 @@ def daily_min(data):
     """Calculate the daily min of a 2D data array.
     Index must be np.datetime64 compatible format."""
     return data.groupby(data.index.date).min()
+
+
+def daily_std(data):
+    """Calculate the daily std of a 2D data array.
+    Index must be np.datetime64 compatible format."""
+    return data.groupby(data.index.date).std()
+
+
+def compute_standard_deviation_by_day_map(data):
+    """Replacing for loop with map"""
+    daily_std_map=[]
+    daily_std_map=map(daily_std, data)
+    daily_standard_deviation = pd.concat(daily_std_map)
+    return daily_standard_deviation
+
 
 def data_normalise(data):
     """Normalise any given 2D data array"""
