@@ -32,7 +32,13 @@ def main(args):
         }
 
     for filename in InFiles:
-        measurement_data = models.read_variable_from_csv(filename, args.measurements)
+        _, extension = os.path.splitext(filename)
+        if extension == '.json':
+            measurement_data = models.read_variable_from_json(filename, args.measurements)
+        elif extension == '.csv':
+            measurement_data = models.read_variable_from_csv(filename, args.measurements)
+        else:
+            raise ValueError(f'Unsupported file format: {extension}')
 
         
         view_data = {'daily sum': models.daily_total(measurement_data), 
