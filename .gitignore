@@ -16,3 +16,6 @@ venv/
 *.pyc
 *.egg-info
 .pytest_cache
+
+#dis
+dist/
