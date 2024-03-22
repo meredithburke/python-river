@@ -1,7 +1,3 @@
-# TITLE
-## subheading 1
-### subheading 2
-
 # RIVER CATCH
 
 ![Continuous Integration build in GitHub Actions](https://github.com/meredithburke/python-river/actions/workflows/main.yml/badge.svg)

@@ -1,4 +1,4 @@
-"""Module containing code for plotting inflammation data."""
+"""Module containing code for plotting River data."""
 
 from matplotlib import pyplot as plt
 import numpy as np
