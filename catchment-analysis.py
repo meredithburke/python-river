@@ -18,7 +18,7 @@ def main(args):
         Infiles = [args.infiles]
     
     if args.full_data_analysis:
-        _, extension = os.path.splitext(InFiles[0])
+        _, extension = os.path.splitext(Infiles[0])
         if extension == '.json':
             data_source = compute_data.JSONDataSource(os.path.dirname(InFiles[0]), f"rain_data_2015*{extension}")
         elif extension == '.csv':
@@ -31,7 +31,7 @@ def main(args):
             'daily standard devaition' : daily_standard_deviation 
         }
 
-    for filename in InFiles:
+    for filename in Infiles:
         measurement_data = models.read_variable_from_csv(filename, args.measurements)
 
         
